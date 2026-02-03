@@ -1,0 +1,28 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'data-model': 'on(change)|*',
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save'
+        }
+    }) }}
+
+    <div>
+        {{ form_row(form.email) }}
+        {{ form_row(form.birthDate) }}
+        {% if this.isAgeEligible is same as(false) %}
+            <p style="color: #b00; margin-top: 8px;">
+                Désolé, il faut avoir au moins 16 ans.
+            </p>
+        {% endif %}
+        {{ form_row(form.newsletters) }}
+    </div>
+
+    
+
+    <button type="submit" style="margin-top: 10px;">
+        S’abonner
+    </button>
+
+    {{ form_end(form) }}
+</div>

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\SubscriberRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: SubscriberRepository::class)]
 #[ORM\Table(name: 'subscriber')]
