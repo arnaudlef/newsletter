@@ -12,6 +12,8 @@ Mailer Symfony
 
 Docker
 
+Mailhog
+
 
 
 Installation : 
@@ -24,6 +26,12 @@ Lancement Docker :
 
 
 
+
+MailHog :
+
+Accès via http://localhost:8025/
+
+Vérification de la reception du mail
 
 
 Commande newsletter :
