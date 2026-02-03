@@ -6,9 +6,12 @@ use App\Repository\SubscriberRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: SubscriberRepository::class)]
 #[ORM\Table(name: 'subscriber')]
+#[ORM\UniqueConstraint(name: 'uniq_subscriber_email', columns: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà enregistré.')]
 class Subscriber
 {
     #[ORM\Id]

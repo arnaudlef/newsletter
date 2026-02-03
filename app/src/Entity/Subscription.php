@@ -17,14 +17,14 @@ class Subscription
 
     #[ORM\ManyToOne(targetEntity: Subscriber::class, inversedBy: 'subscriptions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?string $subscriber = null;
+    private ?Subscriber $subscriber = null;
 
     #[ORM\Column(length:20, enumType: SubscriptionStatus::class)]
     private SubscriptionStatus $status;
 
     #[ORM\ManyToOne(targetEntity: Newsletter::class, inversedBy: 'subscriptions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?string $newsletter = null;
+    private ?Newsletter $newsletter = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $subscribedAt;

@@ -1,0 +1,12 @@
+<p>Bonjour,</p>
+
+<p>Votre inscription est confirmée.</p>
+
+<p>Vous êtes abonné à :</p>
+<ul>
+    {% for n in newsletters %}
+        <li>{{ n.name }}</li>
+    {% endfor %}
+</ul>
+
+<p>À bientôt !</p>
