@@ -34,6 +34,9 @@ final class SubscribeForm extends AbstractController
 
     #[LiveProp]
     public ?string $ageMessage = null;
+
+    #[LiveProp]
+    public ?bool $isSubmitted = false;
     
     public function __construct(
         private readonly AgeChecker $checker,
@@ -47,6 +50,7 @@ final class SubscribeForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
+        $this->isSubmitted = false;
         return $this->createForm(SubscribeType::class, $this->data);
     }
 
@@ -96,6 +100,7 @@ final class SubscribeForm extends AbstractController
         $this->mailerService->sendAccepted($subscriber->getEmail(), $data->newsletters);
 
         $this->ageMessage = null;
+        $this->isSubmitted = true;
 
         $this->addFlash('success', 'Vous êtes inscrit à la newsletter !');
     }

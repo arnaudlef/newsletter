@@ -1,3 +1,50 @@
-body {
-    background-color: skyblue;
+.navbar-bg {
+    background-color: #e2eaeb;
+    height: 12.5vh;
+}
+
+.footer-bg {
+    background-color: #5E5E5E;
+    height: 22.5vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+.phone-number span {
+    font-size: large;
+}
+
+.phone-number i {
+    font-size: xx-large;
+}
+
+#logo img {
+    max-height: 50px;
+}
+
+.logo_annexx_blanc {
+    width: 150px;
+}
+
+.content-block {
+    min-height: 65vh;
+}
+
+.annx-btn {
+    display: block;
+    width: 35%;
+    padding: 10px;
+    color: #fff;
+    font-size: 18px;
+    background: #c20e1a scroll 95% center / 8% auto;
+    font-weight: bold;
+    border: 1px solid white;
+    text-align: center;
+}
+
+#subscribe_newsletters label {
+    padding-left: 5px;
+    padding-right: 15px;
 }

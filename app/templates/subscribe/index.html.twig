@@ -1,13 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Abonnement newsletter</h1>
+    <div class="row d-flex justify-content-center">
+        <h1>Abonnement newsletter</h1>
 
-    {% for message in app.flashes('success') %}
-        <div style="padding:8px; background:#e7ffe7; border:1px solid #9f9; margin:10px 0;">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {{ component('SubscribeForm') }}
+        {{ component('SubscribeForm') }}
+    </div>
 {% endblock %}
