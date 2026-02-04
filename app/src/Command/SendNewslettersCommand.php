@@ -57,7 +57,7 @@ class SendNewslettersCommand extends Command
                         ->to($subscriber->getEmail())
                         ->subject('Newsletter')
                         ->htmlTemplate('emails/newsletter_description.html.twig')
-                        ->context(['newsletter' => $newsletter]);
+                        ->context(['newsletter' => $newsletter, 'subscription' => $subscription]);
 
                     $this->mailer->send($email);
                 }

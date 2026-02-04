@@ -32,15 +32,15 @@ class SeedNewslettersCommand extends Command
         $newsletters = [
             [
                 'name' => 'Tech',
-                'description' => 'Actualités et tendances tech',
+                'description' => "Les métiers de la tech englobent un vaste éventail de professions axées sur la conception, le développement, la gestion et l'optimisation de technologies de l'information et de la communication. Les développeurs de logiciels jouent un rôle central en créant des applications, des systèmes et des solutions innovantes pour répondre aux besoins croissants de la société numérique. Les ingénieurs en informatique contribuent à la conception et à la maintenance des infrastructures technologiques, tandis que les experts en cybersécurité assurent la protection des données et des systèmes contre les menaces potentielles. De plus, les professionnels du machine learning et de l'intelligence artificielle explorent les possibilités offertes par ces domaines émergents pour créer des applications intelligentes et automatisées.",
             ],
             [
                 'name' => 'Business',
-                'description' => 'Stratégie, produit et entrepreneuriat',
+                'description' => "Un business désigne une entreprise/organisation qui a une activité commerciale, industrielle ou professionnelle. Ces business peuvent être à but lucratif ou non. Il s’agit de la définition principale qui réfère à un type d’organisation, mais il existe aussi une définition qui définit le business comme l’effort produit par des équipes au sein d’une entreprise pour développer son activité et ses ventes dans un but lucratif.Il y a donc la définition du business concernant les organisations et la définition du business concernant les activités menées au sein des organisations.",
             ],
             [
                 'name' => 'Lifestyle',
-                'description' => 'Bien-être, inspiration et quotidien',
+                'description' => "Le mode de vie, aussi appelé style de vie ou art de vivre, parfois désigné par l'anglicisme lifestyle, est la manière de vivre, d'être et de penser d'une personne ou d'un groupe d'individus. C'est leur comportement quotidien, leur façon de vivre autour et pour certaines valeurs.",
             ],
         ];
 
