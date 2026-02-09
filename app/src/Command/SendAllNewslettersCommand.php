@@ -4,6 +4,7 @@ namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NewsletterRepository;
+use App\Repository\SubscriptionRepository;
 use App\Entity\Subscription;
 use App\Enum\SubscriptionStatus;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -24,8 +25,8 @@ class SendAllNewslettersCommand extends Command
 {
     public function __construct(
         private readonly MailerInterface $mailer,
-        private readonly EntityManagerInterface $em,
         private readonly NewsletterRepository $newsletterRepository,
+        private readonly SubscriptionRepository $subscriptionRepository,
         private readonly string $fromEmail = 'arnaud-lefrancois@hotmail.com',
     )
     {
@@ -44,7 +45,7 @@ class SendAllNewslettersCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $subscriptions = $this->em->getRepository(Subscription::class)->findAll();
+        $subscriptions =$this->subscriptionRepository->findAll();
 
         if ($subscriptions !== []) {
             foreach($subscriptions as $subscription) {

@@ -4,6 +4,7 @@ namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NewsletterRepository;
+use App\Repository\SubscriptionRepository;
 use App\Entity\Subscription;
 use App\Enum\SubscriptionStatus;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -25,8 +26,8 @@ class SendNewsletterCommand extends Command
 {
     public function __construct(
         private readonly MailerInterface $mailer,
-        private readonly EntityManagerInterface $em,
         private readonly NewsletterRepository $newsletterRepository,
+        private readonly SubscriptionRepository $subscriptionRepository,
         private readonly string $fromEmail = 'arnaud-lefrancois@hotmail.com',
     ) {
         parent::__construct();
@@ -47,30 +48,29 @@ class SendNewsletterCommand extends Command
 
         $counter = 0;
 
-        $subscriptions = $this->em->getRepository(Subscription::class)->findAll();
+        $newsletter = $this->newsletterRepository->findById($id);
+
+        $subscriptions = $this->subscriptionRepository->findApprovedByNewsletter($newsletter);
 
         if ($subscriptions !== []) {
             foreach($subscriptions as $subscription) {
-                if ($subscription->getNewsletter()->getId() === $id && $subscription->getStatus() === SubscriptionStatus::ACCEPTED) {
-                    $newsletter = $subscription->getNewsletter();
-                    $subscriber = $subscription->getSubscriber();
+                $newsletter = $subscription->getNewsletter();
+                $subscriber = $subscription->getSubscriber();
 
-                    $email = (new TemplatedEmail())
-                        ->from($this->fromEmail)
-                        ->to($subscriber->getEmail())
-                        ->subject('Newsletter')
-                        ->htmlTemplate('emails/newsletter_description.html.twig')
-                        ->context(['newsletter' => $newsletter, 'subscription' => $subscription]);
+                $email = (new TemplatedEmail())
+                    ->from($this->fromEmail)
+                    ->to($subscriber->getEmail())
+                    ->subject('Newsletter')
+                    ->htmlTemplate('emails/newsletter_description.html.twig')
+                    ->context(['newsletter' => $newsletter, 'subscription' => $subscription]);
 
-                    $this->mailer->send($email);
+                $this->mailer->send($email);
 
-                    $counter++;
-                }
+                $counter++;
             }
-            if ($counter) {
-                $io->success('Les newsletters ont bien étés envoyées.');
-                return Command::SUCCESS;
-            }
+            
+            $io->success('Les newsletters ont bien étés envoyéeeeeees.');
+            return Command::SUCCESS;
         }
         
         $io->success('Il n\'y a pas de newsletter à envoyer.');
