@@ -29,7 +29,7 @@ Créer la base de données : docker compose exec php sh -lc "cd /var/www/html &&
 
 Appliquer les migrations : docker compose exec php sh -lc "cd /var/www/html && php bin/console doctrine:migrations:migrate -n"
 
-Seed la base avec 3 fake newsletters : docker compose exec php sh -lc "cd /var/www/html && php bin/console app:seed:newsletters"
+Seed la base avec 5 fake newsletters : docker compose exec php sh -lc "cd /var/www/html && php bin/console doctrine:fixtures:load"
 
 Installer importmap : docker compose exec php sh -lc "cd /var/www/html && php bin/console importmap:install"
 
