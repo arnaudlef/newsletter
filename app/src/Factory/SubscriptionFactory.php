@@ -2,14 +2,16 @@
 
 namespace App\Factory;
 
+use App\Entity\Subscription;
 use App\Entity\Subscriber;
-use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
+use App\Entity\Newsletter;
 use App\Enum\SubscriptionStatus;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentObjectFactory<Subscriber>
+ * @extends PersistentObjectFactory<Subscription>
  */
-final class SubscriberFactory extends PersistentObjectFactory
+final class SubscriptionFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -23,7 +25,7 @@ final class SubscriberFactory extends PersistentObjectFactory
     #[\Override]
     public static function class(): string
     {
-        return Subscriber::class;
+        return Subscription::class;
     }
 
     /**
@@ -44,7 +46,7 @@ final class SubscriberFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(Subscriber $subscriber): void {})
+            // ->afterInstantiate(function(Subscription $subscription): void {})
         ;
     }
 }
