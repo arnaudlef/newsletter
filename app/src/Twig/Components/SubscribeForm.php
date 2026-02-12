@@ -4,6 +4,10 @@ namespace App\Twig\Components;
 
 use App\Form\Model\SubscribeData;
 use App\Form\SubscribeType;
+use App\Entity\Subscriber;
+use App\Entity\Newsletter;
+use App\Factory\SubscriberFactory;
+use App\Factory\SubscriptionFactory;
 use App\Service\AgeChecker;
 use App\Service\SubscriberManager;
 use App\Service\SubscriptionManager;
@@ -71,25 +75,15 @@ final class SubscribeForm extends AbstractController
 
         /** @var \App\Form\Model\SubscribeData $data */
         $data = $this->form->getData();
-        
-        $this->ageMessage = null;
-        
-        $subscriber = $this->subscriberManager->getOrCreate($data->email, $data->birthDate);
 
-        if (!$this->checker->isAgeOk($data->birthDate)) {
-            $this->em->flush();
+        $subscriber = SubscriberFactory::findOrCreate(['email' => mb_strtolower(trim($data->email)), 'birthDate' => $data->birthDate]);
 
-            $this->mailerService->sendRefused($subscriber->getEmail());
+        $ageOk = $data->birthDate !== null && $this->checker->isAgeOk($data->birthDate);
+        $status = $ageOk
+            ? \App\Enum\SubscriptionStatus::ACCEPTED
+            : \App\Enum\SubscriptionStatus::REFUSED;
 
-            $this->ageMessage = sprintf('Désolé, il faut avoir au moins %d ans.', $this->checker->minAge());
-            return;
-        }
-
-        $this->subscriptionManager->applySubscriptions(
-            $subscriber,
-            $data->newsletters,
-            SubscriptionStatus::ACCEPTED
-        );
+        $this->subscribe($subscriber, $data->newsletters, $status);
 
         try {
             $this->em->flush();
@@ -97,12 +91,42 @@ final class SubscribeForm extends AbstractController
             $subscriber = $this->subscriberRepository->findOneBy(['email' => mb_strtolower(trim($data->email))]);
         }
 
+        if (!$ageOk) {
+            $this->mailerService->sendRefused($data->email);
+            $this->isSubmitted = true;
+            $this->addFlash('error', 'Désolé, il faut avoir plus de 16 ans.');
+            return;
+        }
+
         $this->mailerService->sendAccepted($subscriber->getEmail(), $data->newsletters);
 
-        $this->ageMessage = null;
         $this->isSubmitted = true;
 
         $this->addFlash('success', 'Vous êtes inscrit à la newsletter !');
+    }
+
+    /**
+     * @param iterable<\App\Entity\Newsletter> $newsletters
+     */
+    public function subscribe(Subscriber $subscriber, iterable $newsletters, SubscriptionStatus $status): void
+    {
+        foreach($newsletters as $newsletter) {
+            $subscription = SubscriptionFactory::findBy([
+                'subscriber' => $subscriber,
+                'newsletter' => $newsletter
+            ]);
+
+            if ($subscription) {
+                $subscription->setStatus($status);
+                continue;
+            }
+
+            SubscriptionFactory::createOne([
+                'subscriber' => $subscriber,
+                'newsletter' => $newsletter,
+                'status' => $status
+            ]);
+        }
     }
 
     public function getCanSubmit(): bool
