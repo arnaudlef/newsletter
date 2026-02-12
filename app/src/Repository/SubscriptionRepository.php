@@ -25,7 +25,8 @@ class SubscriptionRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.newsletter = :newsletter')
             ->setParameter('newsletter', $newsletter)
-            ->andWhere(`s.status = 'accepted'`)
+            ->andWhere('s.status = :status')
+            ->setParameter('status', Status::ACCEPTED)
             ->getQuery()
             ->getResult()
         ;
