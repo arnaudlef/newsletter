@@ -19,7 +19,7 @@
         "symfony/form": "8.0.*",
         "symfony/framework-bundle": "8.0.*",
         "symfony/mailer": "8.*",
-        "symfony/runtime": "8.0.*",
+        "symfony/runtime": "*",
         "symfony/security-csrf": "8.0.*",
         "symfony/serializer": "8.*",
         "symfony/stimulus-bundle": "^2.32",
