@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class SubscribeController extends AbstractController
+final class NewsletterController extends AbstractController
 {
-    #[Route('/subscribe', name: 'app_subscribe')]
+    #[Route('/newsletter', name: 'app_newsletter')]
     public function __invoke(): Response
     {
-        return $this->render('subscribe/index.html.twig', [
-            'controller_name' => 'SubscribeController',
+        return $this->render('newsletter/index.html.twig', [
+            'controller_name' => 'NewsletterController',
         ]);
     }
 }

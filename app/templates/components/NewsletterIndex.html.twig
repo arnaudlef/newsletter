@@ -1,0 +1,7 @@
+<div {{ attributes }}>
+    <div class="row">
+        {% for newsletter in this.newsletters|sort((a,b) => a.status <=> b.status) %}
+            {{ component('NewsletterInput', { newsletter : newsletter, key: 'newsletter-' ~ newsletter.id }) }}
+        {% endfor %}
+    </div>
+</div>

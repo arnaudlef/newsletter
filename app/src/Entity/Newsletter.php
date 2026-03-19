@@ -6,6 +6,7 @@ use App\Repository\NewsletterRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Enum\NewsletterStatus;
 
 #[ORM\Entity(repositoryClass: NewsletterRepository::class)]
 #[ORM\Table(name: 'newsletter')]
@@ -22,6 +23,9 @@ class Newsletter
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(length:20, enumType: NewsletterStatus::class)]
+    private NewsletterStatus $status;
+
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $createdAt;
 
@@ -32,6 +36,7 @@ class Newsletter
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->subscriptions = new ArrayCollection();
+        $this->status = NewsletterStatus::PENDING;
     }
 
     public function getId(): ?int
@@ -53,6 +58,17 @@ class Newsletter
     public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getStatus(): NewsletterStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(NewsletterStatus $status): self
+    {
+        $this->status = $status;
         return $this;
     }
 

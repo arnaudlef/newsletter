@@ -1,0 +1,49 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'data-model': 'on(change)|*',
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save'
+        }
+    }) }}
+
+    <div class="row">
+        <div class="form-group col-4 py-3">
+            <label for="{{ field_id(form.name) }}">Nom</label>
+            <input type="text" class="form-control" id="{{ field_id(form.name) }}" placeholder="La science de demain" name="{{ field_name(form.name) }}" value="{{ field_value(form.name) }}">
+        </div>
+
+        <div class="form-group col-6 py-3">
+            <label for="{{ field_id(form.description) }}">Description</label>
+            <textarea class="form-control desc-textarea" rows="1" id="{{ field_id(form.description) }}" name="{{ field_name(form.description) }}" value="{{ field_value(form.description) }}">{{ field_value(form.description) }}</textarea>
+        </div>
+
+        <div class="col-2 py-3 d-flex align-items-end">
+            <button type="submit" class="annx-btn text-center w-100 rounded" {% if not this.canSubmit %}disabled{% endif %} style="{% if not this.canSubmit %}opacity:.5; cursor:not-allowed;{% endif %}">
+                Ajouter
+            </button>
+        </div>
+
+        
+
+        {% if this.isSubmitted is same as(true) %}
+            <div class="col-12 pb-2">
+                <p class="rounded" style="padding:8px; background:#e7ffe7; border:1px solid #9f9;">
+                    La newsletter a bien été ajoutée !
+                </p>
+            </div>            
+        {% endif %}
+
+        {% for label, messages in app.flashes(['warning']) %}
+            {% if messages != [] %}
+                <div class="col-12 pb-2">
+                    <p class="rounded" style="padding:8px; background:rgb(255, 105, 105); border:1px solid rgb(255, 57, 57);">
+                        La newsletter existe déjà !
+                    </p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row d-flex justify-content-center">
+        <h1>Admin newsletter</h1>
+
+        {{ component('NewNewsletterForm') }}
+        {{ component('NewsletterIndex') }}
+    </div>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Newsletter;
+use App\Repository\NewsletterRepository;
+use App\Enum\NewsletterStatus;
 use App\Form\Model\SubscribeData;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -29,6 +31,12 @@ final class SubscribeType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
+                'query_builder' => function (NewsletterRepository $repository) {
+                    return $repository->createQueryBuilder('n')
+                        ->andWhere('n.status = :status')
+                        ->setParameter('status', NewsletterStatus::PUBLISHED)
+                        ->orderBy('n.name', 'ASC');
+                },
             ])
         ;
     }

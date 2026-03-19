@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\Newsletter;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\Abstract\AbstractEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Newsletter>
  */
-class NewsletterRepository extends ServiceEntityRepository
+class NewsletterRepository extends AbstractEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -39,5 +40,17 @@ class NewsletterRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    public function add(Newsletter $newsletter): void 
+    {
+        $this->getEntityManager()->persist($newsletter);
+        $this->flush();
+    }
+
+    public function remove(Newsletter $newsletter): void 
+    {
+        $this->getEntityManager()->remove($newsletter);
+        $this->flush();
     }
 }

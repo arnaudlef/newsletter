@@ -44,7 +44,6 @@ final class SubscribeForm extends AbstractController
     
     public function __construct(
         private readonly AgeChecker $checker,
-        private readonly EntityManagerInterface $em,
         private readonly SubscriberManager $subscriberManager,
         private readonly SubscriptionManager $subscriptionManager,
         private readonly MailerService $mailerService,

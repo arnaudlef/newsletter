@@ -1,0 +1,17 @@
+<div class="col-lg-3 col-md-4 col-sm-6 p-3" {{ attributes }}>
+    <div class="card w-100">
+        <div class="card-body text-center position-relative">
+            <h5 class="card-title">{{ newsletter.name }}</h5>
+            <p class="card-text">{{ newsletter.description }}</p>
+            <div class="status status-{{ this.getStatus.value }}"></div>
+            <button class="remove d-flex align-items-center justify-content-center" {{ live_action('delete') }}><i class="material-icons">delete</i></button>
+            <button class="annx-btn text-center w-100 rounded" type="button" {{ live_action('save') }}>
+                {% if this.getStatus.value === "published" %}
+                    Dépublier
+                {% else %}
+                    Publier
+                {% endif %}
+            </a>
+        </div>
+    </div>
+</div>
